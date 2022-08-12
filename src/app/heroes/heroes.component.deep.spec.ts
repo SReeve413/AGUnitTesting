@@ -1,4 +1,4 @@
-import { Component, Input, NO_ERRORS_SCHEMA, Output } from "@angular/core";
+import { Component, Directive, Input, NO_ERRORS_SCHEMA, Output } from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing"
 import { By } from "@angular/platform-browser";
 import { of } from "rxjs";
@@ -6,6 +6,19 @@ import { Hero } from "../hero";
 import { HeroService } from "../hero.service";
 import { HeroComponent } from "../hero/hero.component";
 import { HeroesComponent } from "./heroes.component"
+
+@Directive({
+  selector: '[routerLink]',
+  host: {'(click)': 'onClick()'}
+})
+export class RouterLinkDirectiveStub{
+  @Input('routerLink') linkParams: any;
+  navigateTo: any = null;
+
+  onClick() {
+    this.navigateTo = this.linkParams;
+  }
+}
 
 describe('HeroesComponent (Deep Tests)', ()=>{
   let fixture: ComponentFixture<HeroesComponent>;
@@ -23,12 +36,13 @@ describe('HeroesComponent (Deep Tests)', ()=>{
     TestBed.configureTestingModule({
       declarations: [
         HeroesComponent,
-        HeroComponent
+        HeroComponent,
+        RouterLinkDirectiveStub
       ],
       providers: [
         {provide: HeroService, useValue: mockHeroService }
       ],
-      schemas: [NO_ERRORS_SCHEMA]
+      // schemas: [NO_ERRORS_SCHEMA]
     })
     fixture = TestBed.createComponent(HeroesComponent);
 
@@ -36,7 +50,6 @@ describe('HeroesComponent (Deep Tests)', ()=>{
 
   it('should render each hero as a HeroComponent', ()=> {
     mockHeroService.getHeroes.and.returnValue(of(HEROES));
-
     // Run ngOnInit
     fixture.detectChanges();
 
