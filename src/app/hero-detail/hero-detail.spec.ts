@@ -38,31 +38,31 @@ describe('HeroDetailComponent', ()=> {
     expect(fixture.nativeElement.querySelector('h2').textContent).toContain('SUPER DUDE');
   })
 
-  // it('should call updateHero when save is called', fakeAsync(() => {
-  //   mockHeroService.updateHero.and.returnValue(of({}));
-  //   fixture.detectChanges();
-
-  //   fixture.componentInstance.save();
-  //   // tick(250)
-  //   flush();
-
-  //   // setTimeout(() => {
-  //   //   expect(mockHeroService.updateHero).toHaveBeenCalled();
-  //   //   done();
-  //   // }, 300)
-
-  //   expect(mockHeroService.updateHero).toHaveBeenCalled();
-  // }))
-
-  it('should call updateHero when save is called', waitForAsync(() => {
+  it('should call updateHero when save is called', fakeAsync(() => {
     mockHeroService.updateHero.and.returnValue(of({}));
     fixture.detectChanges();
 
     fixture.componentInstance.save();
+    // tick(250)
+    flush();
 
-    fixture.whenStable().then(() => {
-      expect(mockHeroService.updateHero).toHaveBeenCalled();
-    })
+    // setTimeout(() => {
+    //   expect(mockHeroService.updateHero).toHaveBeenCalled();
+    //   done();
+    // }, 300)
 
+    expect(mockHeroService.updateHero).toHaveBeenCalled();
   }))
+
+  // it('should call updateHero when save is called', waitForAsync(() => {
+  //   mockHeroService.updateHero.and.returnValue(of({}));
+  //   fixture.detectChanges();
+
+  //   fixture.componentInstance.save();
+
+  //   fixture.whenStable().then(() => {
+  //     expect(mockHeroService.updateHero).toHaveBeenCalled();
+  //   })
+
+  // }))
 })
